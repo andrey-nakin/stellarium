@@ -246,7 +246,10 @@ void ScreenImageMgr::createScreenImage(const QString& id, const QString& filenam
 	if (allScreenImages.contains(id))
 		deleteImage(id);
 
-	QString path = StelFileMgr::findFile("scripts/" + filename);
+	QString path = StelFileMgr::findFile(
+		filename.startsWith("file:")
+			? filename.mid(5)
+			: "scripts/" + filename);
 	if (!path.isEmpty())
 	{
 		ScreenImage* i = new ScreenImage(path, x, y, visible, scale, alpha, fadeDuration);
